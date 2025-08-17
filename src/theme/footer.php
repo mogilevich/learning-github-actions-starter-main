@@ -1,4 +1,5 @@
 Hello World
+check changes
 <footer class="site_footer <?php if(empty(ale_get_option('footer_info')) && empty(ale_get_option('footer_info')) && empty(ale_get_option('footer_navigation_title')) && empty(ale_get_option('footer_contacts_title'))){ echo 'no_content'; } ?>">
     
     <div class="alekids_footer_ic1"></div>
