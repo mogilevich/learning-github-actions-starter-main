@@ -30,11 +30,11 @@ jobs:
 
       - name: Copy Theme files to server via SSH
         run: |
-            sshpass -p "${{ secrets.KEY }}" scp -o StrictHostKeyChecking=no -r ./dist/theme/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/root/cicd/starter/wp-content/themes/starter/
+            sshpass -p "${{ secrets.KEY }}" scp -o StrictHostKeyChecking=no -r ./dist/theme/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/root/cicd/starter/dist/theme/
 
       - name: Copy Plugins files to server via SSH
         run: |
-            sshpass -p "${{ secrets.KEY }}" scp -o StrictHostKeyChecking=no -r ./dist/plugin/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/root/cicd/starter/wp-content/plugins/ale-core/
+            sshpass -p "${{ secrets.KEY }}" scp -o StrictHostKeyChecking=no -r ./dist/plugin/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/root/cicd/starter/dist/plugin/
 
       - name: Copy docker-compose.yml to server
         run: |
