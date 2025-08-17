@@ -1,0 +1,36 @@
+# CI CD for starter theme
+name: CI/CD
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git clone repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 12
+          cache: 'npm'
+
+      - name: Install Node Modules
+        run: npm i
+
+      - name: Build App
+        run: npm run prod
+
+      - name: Install lftp
+        run: sudo apt-get install lftp
+
+      - name: Copy Theme files to server
+        run: |
+            lftp -e "set ftp:ssl-allow no; set ftp:use-feat false; set ssl:verify-certificate no; mirror --delete -R -P 20 ./dist/theme /wp-content/themes/starter; bye" -u ${{ secrets.USERNAME }},${{ secrets.KEY }} ${{ secrets.HOST }}
+
+      - name: Copy Plugins files to server
+        run: |
+            lftp -e "set ftp:ssl-allow no; set ftp:use-feat false; set ssl:verify-certificate no; mirror --delete -R -P 20 ./dist/plugin /wp-content/plugins/ale-core; bye" -u ${{ secrets.USERNAME }},${{ secrets.KEY }} ${{ secrets.HOST }}
