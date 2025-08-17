@@ -2,7 +2,7 @@
 Ale Starter Theme Source
 
 Status of last deployment:<br>
-<img src="https://github.com/CRIK0VA/starter/actions/workflows/cicd.yml/badge.svg?branch=main" />
+<img src="https://github.com/mogilevich/learning-github-actions-starter-main/actions/workflows/cicd.yml/badge.svg?branch=main" />
 
 
 ## About
