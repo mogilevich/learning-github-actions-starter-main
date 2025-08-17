@@ -24,13 +24,14 @@ jobs:
       - name: Build App
         run: npm run prod
 
-      - name: Install lftp
-        run: sudo apt-get install lftp
 
-      - name: Copy Theme files to server
-        run: |
-            lftp -e "set ftp:ssl-allow no; set ftp:use-feat false; set ssl:verify-certificate no; mirror --delete -R -P 20 ./dist/theme /wp-content/themes/starter; bye" -u ${{ secrets.USERNAME }},${{ secrets.KEY }} ${{ secrets.HOST }}
+      - name: Install sshpass
+        run: sudo apt-get install sshpass
 
-      - name: Copy Plugins files to server
+      - name: Copy Theme files to server via SSH
         run: |
-            lftp -e "set ftp:ssl-allow no; set ftp:use-feat false; set ssl:verify-certificate no; mirror --delete -R -P 20 ./dist/plugin /wp-content/plugins/ale-core; bye" -u ${{ secrets.USERNAME }},${{ secrets.KEY }} ${{ secrets.HOST }}
+            sshpass -p "${{ secrets.KEY }}" scp -o StrictHostKeyChecking=no -r ./dist/theme/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/wp-content/themes/starter/
+
+      - name: Copy Plugins files to server via SSH
+        run: |
+            sshpass -p "${{ secrets.KEY }}" scp -o StrictHostKeyChecking=no -r ./dist/plugin/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/wp-content/plugins/ale-core/
